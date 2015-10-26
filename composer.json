@@ -1,0 +1,27 @@
+{
+    "name": "juuuuuu/sncf",
+    "description": "A small SDK to retrieve in real time information about transport in IDF",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Julien Manganne",
+            "email": "jmanganne@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.1"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-0": {
+            "Juuuuuu\\Sncf\\": ""
+        }
+    },
+    "target-dir": "Juuuuuu/Sncf",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
