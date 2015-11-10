@@ -12,13 +12,15 @@ class Api
     private $username;
     private $password;
     private $destinations = [];
+    private $count;
 
-    public function __construct($codeUIC, $username, $password, array $destinations = [])
+    public function __construct($codeUIC, $username, $password, array $destinations = [], $count = null)
     {
         $this->codeUIC = $codeUIC;
         $this->username = $username;
         $this->password = $password;
         $this->destinations = $destinations;
+        $this->count = $count;
         $this->client = new Client();
     }
 
@@ -62,7 +64,7 @@ class Api
                     }
                 }
 
-                return $this->filterByDestination($trains);
+                return $this->getNextTrainsByNumber($this->filterByDestination($trains));
             }
         } catch (Exception $e) {
             return json_encode(['status' => 520, 'message' => $e->getMessage()]);
@@ -77,6 +79,25 @@ class Api
             if (!in_array($train['term'], $this->destinations)) {
                 unset($trains[$key]);
             }
+        }
+
+        return $trains;
+    }
+
+    private function getNextTrainsByNumber($trains)
+    {
+        if ($this->count) {
+            $counter = 0;
+            foreach ($trains as $key => $train) {
+
+                if ($counter < $this->count) {
+                    $nextTrainsByNumber[$counter] = $train;
+                }
+
+                $counter++;
+            }
+
+            return $nextTrainsByNumber;
         }
 
         return $trains;
